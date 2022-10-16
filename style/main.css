@@ -1,0 +1,59 @@
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*Corpo do fluxo*/
+body {
+    background-color: black;
+    height: 100%;
+    color:white;
+    font-family:'Times New Roman', 'Times New Roman', Times, serif;
+}
+
+header .logo {
+    margin-left: 0.5em;
+    font-family:'Bombing';
+    font-size: 2em;
+    margin-top: 0.3em;
+    margin-bottom: 0.5em;
+}
+
+header div h2 a {
+    text-decoration: none;
+    color: white;
+}
+
+header .nav-ul a {
+/*     display: flex;
+    flex-wrap: wrap; */
+    margin-right: 10px;
+    font-size: 0.7em;
+}
+
+.nav-ul a {
+    text-decoration: none; 
+    color: #aaa;
+    margin-right: 10px;
+    font-size: 0.7em;
+}
+
+.navbar {
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.semestre {
+    background-color: rgba(255, 0, 0, 0.596);
+    display: flex;
+    justify-content: space-around;
+    padding: 0.4em;
+}
+
+main nav a{
+    display: flex;
+    justify-content: center;
+}
