@@ -5,352 +5,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/main.css">
-    <title>Fluxograma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <title>Fluxograma de Engenharia de Software</title>
 </head>
 
 <body>
     <header>
         <div class="container">
             <nav class="navbar">
-                <h2 class="logo"><a href="#">Fluxograma</a></h2>
-                <nav class="nav-ul" id="nav-ul">
-                    <!--Uma seção de uma pagina que aponta para outras páginas-->
-                    <a href="#">Início</a>
-                    <a href="#semestre_1">1° Semestre</a>
-                    <a href="#semestre_2">2° Semestre</a>
-                    <a href="#semestre_3">3° Semestre</a>
-                    <a href="#semestre_4">4° Semestre</a>
-                    <a href="#semestre_5">5° Semestre</a>
-                    <a href="#semestre_6">6° Semestre</a>
-                    <a href="#semestre_7">7° Semestre</a>
-                    <a href="#semestre_8">8° Semestre</a>
-                    <a href="#semestre_9">9° Semestre</a>
-                    <a href="#semestre_10">10° Semestre</a>
-                </nav>
-                <div>
+                <h2 class="logo"><a href="#">Fluxograma Eng. de Software</a></h2>
+                <div class="nav-links">
+                    <a href="#semestre_1">1°</a>
+                    <a href="#semestre_2">2°</a>
+                    <a href="#semestre_3">3°</a>
+                    <a href="#semestre_4">4°</a>
+                    <a href="#semestre_5">5°</a>
+                    <a href="#semestre_6">6°</a>
+                    <a href="#semestre_7">7°</a>
+                    <a href="#semestre_8">8°</a>
+                    <a href="#semestre_9">9°</a>
+                    <a href="#semestre_10">10°</a>
+                </div>
+                <div id="legenda">
                     <h3>Legenda</h3>
+                    <ul>
+                        <li><span class="cor-prerequisito"></span> Pré-requisito</li>
+                        <li><span class="cor-selecionada"></span> Selecionada</li>
+                        <li><span class="cor-liberada"></span> Liberada por</li>
+                    </ul>
                 </div>
             </nav>
         </div>
     </header>
+
     <main>
-        <div class="corpo">
-            <div class="container" style="background-color: blue;">
-                <nav class="nav-ul" id="nav-ul"><a href="#semestre_1">1° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Cálculo 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Engenharia e Ambiente</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Introdulção à Engenharia</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Desenho Indutrial Assistido por Computador</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Algoritimo e Programação de Computadores</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_2">2° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Cálculo 2</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Física 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Física 1 Experimental</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Introdulção a Álgebra Linear</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Desenvolvimento de Software</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Probabilidade e Estatística Aplicado a Engenharia</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_3">3° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Engenharia Econômica</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Orientação a Objetos</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Métodos Numéricos para Engenharia</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Humanidades e Cidadania</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Prática de Eletrônica Digital 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Teoria de Eletrônica Digital 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Matemática Discreta 1</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_4">4° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Matemática Discreta 2</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Métodos de Desenvolvimento de Software</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Fundamentos de Arquitetura de Computadores</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Estrutura de Dados e Algoritmos</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Projeto Integrador de Engenharia 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Gestão da Produção e Qualidade</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_5">5° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Copiladores 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Estruturas de Dados 2</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Sistemas de Banco de Dados 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Fundamentos de Sistemas Operacionais</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Requisitos de Software</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Interação Humano Computador</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_6">6° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Sistemas de Banco de Dados 2</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Arquitetura e Desenho de Software
-                            </a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Fudamentos de Redes de Computadores</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Testes de Software</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Qualidade de Software 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Projeto de Algoritmos</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_7">7° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Fundamentos de Sistemas Embarcados</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Paradigmas de Programação</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Programação para Sistemas Paralelos e Distribuídos</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Qualidade de Software 2</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Informação, Comunidade e a Sociedade do Conhecimento</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Técnicas de Programação em Plataformas Emergentes</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_8">8° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Estágio Supervisionado</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Engenharia de Produto de Software</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Gerência de Configuração e Evolução de Software</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Física para Jogos Eletrônicos 1</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_9">9° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Trabalho de Conclusão de Curso 1</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Projeto Integrador de Engenharia 2</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Aprendizado de Máquina</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Introdução à Web Semântica</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Física para Jogos Eletronicos 2</a></div>
-                        </div>
-                    </div>
-                </nav>
-                <nav class="nav-ul"><a href="#semestre_10">10° Semestre</a>
-                    <div class="semestre">
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Trabalho de Conclusão de Curso 2</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Compiladores 2</a></div>
-                        </div>
-                        <div class="item">
-                            <div class="codigo"></div>
-                            <div class="credito"></div>
-                            <div class="nomeMateria"><a>Melhoria de Processos de Software</a></div>
-                        </div>
-                    </div>
-                </nav>
+        <div class="fluxograma-container">
             </div>
-        </div>
     </main>
+
+    <script src="scripts/materias.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 
 </html>
