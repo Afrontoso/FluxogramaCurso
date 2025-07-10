@@ -1,59 +1,149 @@
+/* styles/main.css */
+
 * {
-    margin:0;
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/*Corpo do fluxo*/
 body {
-    background-color: black;
-    height: 100%;
-    color:white;
-    font-family:'Times New Roman', 'Times New Roman', Times, serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
 }
 
-header .logo {
-    margin-left: 0.5em;
-    font-family:'Bombing';
-    font-size: 2em;
-    margin-top: 0.3em;
-    margin-bottom: 0.5em;
+.container {
+    width: 95%;
+    margin: 0 auto;
 }
 
-header div h2 a {
-    text-decoration: none;
-    color: white;
-}
-
-header .nav-ul a {
-/*     display: flex;
-    flex-wrap: wrap; */
-    margin-right: 10px;
-    font-size: 0.7em;
-}
-
-.nav-ul a {
-    text-decoration: none; 
-    color: #aaa;
-    margin-right: 10px;
-    font-size: 0.7em;
-}
-
+/* --- HEADER --- */
 .navbar {
-    background-color: green;
+    background-color: #1f1f1f;
+    padding: 1rem;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
-}
-.semestre {
-    background-color: rgba(255, 0, 0, 0.596);
-    display: flex;
-    justify-content: space-around;
-    padding: 0.4em;
+    border-bottom: 1px solid #333;
 }
 
-main nav a{
+.navbar .logo a {
+    color: #00aaff;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.nav-links a {
+    color: #aaa;
+    text-decoration: none;
+    margin: 0 0.5rem;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #00aaff;
+}
+
+#legenda ul {
+    list-style: none;
     display: flex;
-    justify-content: center;
+}
+
+#legenda li {
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+#legenda span {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 5px;
+    border: 1px solid #555;
+}
+
+.cor-prerequisito { background-color: #ffc107; } /* Amarelo */
+.cor-selecionada { background-color: #00aaff; } /* Azul */
+.cor-liberada { background-color: #28a745; }  /* Verde */
+
+/* --- MAIN FLUXOGRAMA --- */
+main {
+    padding: 2rem 0;
+}
+
+.fluxograma-container {
+    display: flex;
+    gap: 1rem; /* Espaço entre as colunas dos semestres */
+    overflow-x: auto; /* Permite rolagem horizontal em telas pequenas */
+    padding: 1rem;
+}
+
+.semestre-coluna {
+    flex: 1; /* Faz com que cada coluna tente ocupar o mesmo espaço */
+    min-width: 200px; /* Largura mínima para cada coluna */
+    background-color: #1c1c1c;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #2a2a2a;
+}
+
+.semestre-coluna h3 {
+    text-align: center;
+    color: #00aaff;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.5rem;
+}
+
+.materia-card {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.materia-card:hover {
+    transform: translateY(-5px);
+    border-color: #00aaff;
+}
+
+.materia-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75em;
+    color: #aaa;
+    margin-bottom: 0.5rem;
+}
+
+.materia-nome {
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #e0e0e0;
+}
+
+/* --- Estilos para Interatividade (JavaScript) --- */
+.materia-card.highlight-selected {
+    background-color: #00aaff;
+    color: #fff;
+    border-color: #fff;
+}
+.materia-card.highlight-prerequisite {
+    background-color: #ffc107;
+    color: #000;
+    border-color: #fff;
+}
+.materia-card.highlight-unlocks {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #fff;
 }
