@@ -86,3 +86,102 @@
         .cor-prerequisito { background-color: var(--cor-prerequisito); }
         .cor-selecionada { background-color: var(--cor-selecionada); }
         .cor-liberada { background-color: var(--cor-liberada); }
+
+        /* --- MAIN FLUXOGRAMA --- */
+        main {
+            padding: 2rem 0;
+        }
+
+        .fluxograma-container {
+            position: relative; /* Necessário para as linhas */
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem;
+            min-height: 70vh;
+        }
+
+        .semestre-coluna {
+            flex: 1;
+            min-width: 220px;
+            background-color: var(--cor-fundo-coluna);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid #2a2a2a;
+        }
+
+        .semestre-coluna h3 {
+            text-align: center;
+            color: var(--cor-primaria);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+        }
+
+        .materia-card {
+            background-color: var(--cor-fundo-card);
+            border-left: 5px solid var(--cor-borda);
+            border-radius: 6px;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .materia-card.obrigatoria {
+             border-left-color: var(--cor-primaria);
+        }
+
+        .materia-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cor-primaria);
+        }
+
+        .materia-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75em;
+            color: var(--cor-texto-secundario);
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .materia-nome {
+            font-weight: 500;
+            font-size: 0.9em;
+            color: var(--cor-texto-principal);
+        }
+
+        /* --- Estilos para Interatividade --- */
+        .materia-card.highlight-selected,
+        .materia-card.highlight-prerequisite,
+        .materia-card.highlight-unlocks {
+            color: var(--cor-texto-destaque);
+        }
+
+        /* Muda a cor do texto do header quando o card está destacado */
+        .materia-card.highlight-selected .materia-header,
+        .materia-card.highlight-prerequisite .materia-header,
+        .materia-card.highlight-unlocks .materia-header {
+            color: var(--cor-texto-destaque);
+        }
+        
+        .materia-card.highlight-selected .materia-nome,
+        .materia-card.highlight-prerequisite .materia-nome,
+        .materia-card.highlight-unlocks .materia-nome {
+             color: var(--cor-texto-destaque);
+        }
+
+        .materia-card.highlight-selected {
+            background-color: var(--cor-selecionada);
+            border-color: #fff;
+        }
+        .materia-card.highlight-prerequisite {
+            background-color: var(--cor-prerequisito);
+            border-color: #fff;
+        }
+        .materia-card.highlight-unlocks {
+            background-color: var(--cor-liberada);
+            border-color: #fff;
+        }
