@@ -185,3 +185,40 @@
             background-color: var(--cor-liberada);
             border-color: #fff;
         }
+        /* Para telas de tablet e menores */
+        @media (max-width: 1024px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+
+        /* Para telas de celular */
+        @media (max-width: 768px) {
+            .fluxograma-container {
+                flex-direction: column; /* Empilha os semestres verticalmente */
+                overflow-x: hidden; /* Remove a rolagem horizontal */
+            }
+
+            .semestre-coluna {
+                min-width: 100%; /* Faz a coluna ocupar a largura total */
+            }
+
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            #legenda h3 {
+                text-align: center;
+                margin-top: 1rem;
+            }
+
+            #legenda ul {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
