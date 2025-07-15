@@ -14,8 +14,8 @@ const dadosFluxograma = {
         { id: "MAT0031", nome: "Introdução a Álgebra Linear", codigo: "MAT0031", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: [] }
     ],
     "3": [
-        { id: "FGA0071", nome: "Prática de Eletrônica Digital 1", codigo: "FGA0071", creditos: 2, natureza: "OBRIGATORIO", prerequisitos: ["MAT0031"] },
-        { id: "FGA0073", nome: "Teoria de Eletrônica Digital 1", codigo: "FGA0073", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: ["MAT0031 "] },
+        { id: "FGA0071", nome: "Prática de Eletrônica Digital 1", codigo: "FGA0071", creditos: 2, natureza: "OBRIGATORIO", prerequisitos: ["MAT0031", "FGA0073"] },
+        { id: "FGA0073", nome: "Teoria de Eletrônica Digital 1", codigo: "FGA0073", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: ["MAT0031", "FGA0071"] },
         { id: "FGA0085", nome: "Matemática Discreta 1", codigo: "FGA0085", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: [] },
         { id: "FGA0133", nome: "Engenharia Econômica", codigo: "FGA0133", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: [] },
         { id: "FGA0158", nome: "Orientação a Objetos", codigo: "FGA0158", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: ["CIC0004"] },
