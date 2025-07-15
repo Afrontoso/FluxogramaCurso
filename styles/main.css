@@ -50,16 +50,33 @@
             font-weight: 700;
         }
 
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .nav-links a {
             color: var(--cor-texto-secundario);
             text-decoration: none;
-            margin: 0 0.5rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid var(--cor-texto-secundario);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1em;
-            transition: color 0.3s ease;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--cor-primaria);
+            color: var(--cor-fundo);
+            background-color: var(--cor-primaria);
+            border-color: var(--cor-primaria);
         }
 
         #legenda ul {
