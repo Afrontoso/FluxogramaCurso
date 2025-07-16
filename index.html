@@ -6,12 +6,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="styles/main.css">
     <title>Fluxograma de Engenharia de Software</title>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+
+        // ===============================================================================
+        // SUA CONFIGURAÇÃO DO FIREBASE VAI AQUI
+        // Crie um projeto em https://firebase.google.com/ e obtenha sua configuração.
+        // ===============================================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyAh-hhECqKATSCb6XHXyt0ongAJMwwDbjE",
+            authDomain: "fluxograma-unb.firebaseapp.com",
+            projectId: "fluxograma-unb",
+            storageBucket: "fluxograma-unb.appspot.com",
+            messagingSenderId: "560090960983",
+            appId: "1:560090960983:web:3d8af4fee7162ca3097f12",
+            measurementId: "G-CDJ6ZN8XMM"
+        };
+
+        // Inicializa o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // Disponibiliza as funções globalmente para serem usadas no script principal
+        window.firebase = {
+            auth,
+            db,
+            GoogleAuthProvider,
+            signInWithPopup,
+            onAuthStateChanged,
+            signOut,
+            doc,
+            getDoc,
+            setDoc,
+            updateDoc,
+            arrayUnion,
+            arrayRemove
+        };
+
+    </script>
 </head>
 
 <body>
@@ -19,24 +63,28 @@
         <div class="container">
             <nav class="navbar">
                 <h2 class="logo"><a href="#">Fluxograma Eng. de Software</a></h2>
-                <div class="nav-links">
-                    <a href="#semestre_1">1°</a>
-                    <a href="#semestre_2">2°</a>
-                    <a href="#semestre_3">3°</a>
-                    <a href="#semestre_4">4°</a>
-                    <a href="#semestre_5">5°</a>
-                    <a href="#semestre_6">6°</a>
-                    <a href="#semestre_7">7°</a>
-                    <a href="#semestre_8">8°</a>
-                    <a href="#semestre_9">9°</a>
-                    <a href="#semestre_10">10°</a>
+                
+                <div id="progress-section">
+                    <span id="total-progress"></span>
+                    <span id="completed-progress"></span>
+                    <span id="remaining-progress"></span>
                 </div>
+
+                <div class="auth-section">
+                    <div id="user-info" style="display: none;">
+                        <img id="user-photo" src="" alt="User photo">
+                        <span id="user-name"></span>
+                        <button id="logout-btn">Sair</button>
+                    </div>
+                    <button id="login-btn">Login com Google</button>
+                </div>
+
                 <div id="legenda">
                     <h3>Legenda</h3>
                     <ul>
                         <li><span class="cor-prerequisito"></span> Pré-requisito</li>
                         <li><span class="cor-selecionada"></span> Selecionada</li>
-                        <li><span class="cor-liberada"></span> Liberada por</li>
+                        <li><span class="cor-liberada"></span> Liberada</li>
                     </ul>
                 </div>
             </nav>
@@ -45,8 +93,17 @@
 
     <main>
         <div class="fluxograma-container">
-            </div>
+        </div>
     </main>
+
+    <!-- Modal de Erro -->
+    <div id="error-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Erro de Configuração</h3>
+            <p id="error-message"></p>
+            <button id="close-modal-btn">Entendi</button>
+        </div>
+    </div>
 
     <script src="scripts/materias.js"></script>
     <script src="scripts/script.js"></script>
