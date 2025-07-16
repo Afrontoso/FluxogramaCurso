@@ -1,4 +1,4 @@
-const dadosFluxograma = {
+export const dadosFluxograma = {
     "1": [
         { id: "CIC0004", nome: "Algoritmos e Programação de Computadores", codigo: "CIC0004", creditos: 6, natureza: "OBRIGATORIO", prerequisitos: [] },
         { id: "FGA0163", nome: "Introdução à Engenharia", codigo: "FGA0163", creditos: 2, natureza: "OBRIGATORIO", prerequisitos: [] },

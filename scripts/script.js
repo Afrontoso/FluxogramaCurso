@@ -1,3 +1,5 @@
+import { dadosFluxograma } from './materias.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const fb = window.firebase;
     const container = document.querySelector('.fluxograma-container');
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutBtn = document.getElementById('logout-btn');
     const userInfoDiv = document.getElementById('user-info');
     const userNameSpan = document.getElementById('user-name');
-    const userPhotoImg = document.getElementById('user-photo');
+    const userPhotoImg = document.getElementById('user-photo'); // Corrigido
     const errorModal = document.getElementById('error-modal');
     const errorMessageP = document.getElementById('error-message');
     const closeModalBtn = document.getElementById('close-modal-btn');
@@ -122,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         totalProgressSpan.innerHTML = `Total: <strong>${totalCredits} CR</strong> (${totalCredits * HOURS_PER_CREDIT}h)`;
         completedProgressSpan.innerHTML = `Concluído: <strong>${completedCredits} CR</strong> (${completedCredits * HOURS_PER_CREDIT}h)`;
-        remainingProgressSpan.innerHTML = `Restante: <strong>${remainingCredits} CR</strong> (${remainingCredits * HOURS_PER_CREDIT}h)`;
+        remainingProgressSpan.innerHTML = `Pendente: <strong>${remainingCredits} CR</strong> (${remainingCredits * HOURS_PER_CREDIT}h)`;
     }
 
     // --- LÓGICA DO FLUXOGRAMA ---
@@ -161,13 +163,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.dataset.id = materia.id;
 
                 card.innerHTML = `
-                            <div class="materia-header">
-                                <span class="materia-codigo">${materia.codigo}</span>
-                                <span class="materia-creditos">${materia.creditos} CR</span>
-                            </div>
-                            <div class="materia-nome">${materia.nome}</div>
-                            <input type="checkbox" class="materia-checkbox" ${completed.includes(materia.id) ? 'checked' : ''} data-materia-id="${materia.id}">
-                        `;
+                                <div class="materia-header">
+                                    <span class="materia-codigo">${materia.codigo}</span>
+                                    <span class="materia-creditos">${materia.creditos} CR</span>
+                                </div>
+                                <div class="materia-nome">${materia.nome}</div>
+                                <input type="checkbox" class="materia-checkbox" ${completed.includes(materia.id) ? 'checked' : ''} data-materia-id="${materia.id}">
+                            `;
 
                 card.addEventListener('click', (e) => {
                     if (e.target.type !== 'checkbox') {
@@ -199,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     userCompletedSubjects = userCompletedSubjects.filter(id => id !== materiaId);
                     document.querySelector(`[data-id="${materiaId}"]`).classList.remove('completed');
                 }
+                console.log(subjectId, userCompletedSubjects)
                 updateProgressPanel(); // Atualiza o painel após a mudança
             });
         });

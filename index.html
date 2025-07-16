@@ -9,21 +9,19 @@
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- BIBLIOTECA PARA DESENHAR AS LINHAS (Carregada no head) -->
+    <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
 
     <link rel="stylesheet" href="styles/main.css">
     <title>Fluxograma de Engenharia de Software</title>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
-        // ===============================================================================
-        // SUA CONFIGURAÇÃO DO FIREBASE VAI AQUI
-        // Crie um projeto em https://firebase.google.com/ e obtenha sua configuração.
-        // ===============================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyAh-hhECqKATSCb6XHXyt0ongAJMwwDbjE",
             authDomain: "fluxograma-unb.firebaseapp.com",
@@ -34,31 +32,18 @@
             measurementId: "G-CDJ6ZN8XMM"
         };
 
-        // Inicializa o Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-        // Disponibiliza as funções globalmente para serem usadas no script principal
         window.firebase = {
-            auth,
-            db,
-            GoogleAuthProvider,
-            signInWithPopup,
-            onAuthStateChanged,
-            signOut,
-            doc,
-            getDoc,
-            setDoc,
-            updateDoc,
-            arrayUnion,
-            arrayRemove
+            auth, db, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut,
+            doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove
         };
-
     </script>
 </head>
 
-<body>
+<body class="logged-out">
     <header>
         <div class="container">
             <nav class="navbar">
@@ -105,9 +90,8 @@
         </div>
     </div>
 
-    <script src="scripts/materias.js"></script>
-    <script src="scripts/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
+    <!-- SCRIPT PRINCIPAL (Carregado como módulo) -->
+    <script type="module" src="scripts/script.js"></script>
 </body>
 
 </html>
