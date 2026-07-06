@@ -204,14 +204,49 @@ header {
     padding: 0.35rem 0.9rem;
     border-left: 3px solid var(--cor-borda);
     margin-left: 0.5rem;
+    min-width: 190px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    margin-bottom: 0.15rem;
+}
+
+.progress-label {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.85em;
+    font-weight: 700;
+}
+
+#progress-percent {
+    color: var(--cor-liberada);
+    font-weight: 700;
+    font-size: 1.05em;
+}
+
+#progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--cor-borda);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.35rem;
+}
+
+#progress-bar-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--cor-liberada), var(--cor-primaria));
+    border-radius: 6px;
+    transition: width 0.5s ease;
 }
 
 #progress-section span strong {
     color: var(--cor-texto-principal);
-}
-
-#completed-progress {
-    color: var(--cor-liberada);
 }
 
 #remaining-progress {
@@ -422,6 +457,17 @@ body.logged-out #progress-section {
     text-decoration: line-through;
 }
 
+/* --- Matéria bloqueada (pré-requisitos pendentes) --- */
+.materia-card.locked {
+    opacity: 0.5;
+    filter: grayscale(35%);
+}
+
+.materia-card.locked:hover {
+    opacity: 0.8;
+    filter: grayscale(0%);
+}
+
 .materia-checkbox {
     position: absolute;
     bottom: 8px;
@@ -430,6 +476,69 @@ body.logged-out #progress-section {
     height: 18px;
     cursor: pointer;
     accent-color: var(--cor-liberada);
+}
+
+.materia-lock {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cor-texto-secundario);
+    pointer-events: none;
+}
+
+.materia-lock svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+}
+
+/* --- Ações do card customizado (editar / excluir) --- */
+.card-acoes {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: flex;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.materia-card.is-custom:hover .card-acoes {
+    opacity: 1;
+}
+
+.card-acoes button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.card-acoes button svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+}
+
+.card-editar:hover {
+    background-color: rgba(0, 170, 255, 0.15);
+    color: var(--cor-primaria);
+}
+
+.card-excluir:hover {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
 }
 
 .materia-header {
@@ -458,6 +567,9 @@ body.logged-out #progress-section {
     border-color: rgba(255, 255, 255, 0.6);
     box-shadow: 0 6px 18px var(--cor-sombra);
     transform: translateY(-2px);
+    /* Ao destacar, remove o efeito de "bloqueada" para leitura clara */
+    opacity: 1;
+    filter: none;
 }
 
 .materia-card.highlight-selected {
@@ -536,6 +648,95 @@ body.logged-out #progress-section {
 
 #close-modal-btn:hover {
     background-color: var(--cor-primaria-hover);
+}
+
+/* --- Formulário de adicionar matéria --- */
+.form-materia {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    text-align: left;
+    margin-top: 0.8rem;
+}
+
+.form-materia label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+}
+
+.form-materia input,
+.form-materia select {
+    font-family: inherit;
+    font-size: 0.95em;
+    padding: 0.55rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-fundo-coluna);
+    color: var(--cor-texto-principal);
+    transition: border-color 0.2s ease;
+}
+
+.form-materia input:focus,
+.form-materia select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+}
+
+.form-linha {
+    display: flex;
+    gap: 0.9rem;
+}
+
+.form-linha label {
+    flex: 1;
+}
+
+.form-hint {
+    font-weight: 400;
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+.form-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+}
+
+.btn-primario,
+.btn-secundario {
+    padding: 0.55rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9em;
+    border: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-primario {
+    background-color: var(--cor-primaria);
+    color: #fff;
+}
+
+.btn-primario:hover {
+    background-color: var(--cor-primaria-hover);
+}
+
+.btn-secundario {
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    border: 1px solid var(--cor-borda);
+}
+
+.btn-secundario:hover {
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-texto-secundario);
 }
 
 /* ==========================================================================

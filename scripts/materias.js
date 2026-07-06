@@ -17,7 +17,7 @@ export const dadosFluxograma = {
     "3": [
         { id: "FGA0071", nome: "Prática de Eletrônica Digital 1", codigo: "FGA0071", creditos: 2, natureza: "OPTATORIA", prerequisitos: ["MAT0031", "FGA0073"] },
         { id: "FGA0073", nome: "Teoria de Eletrônica Digital 1", codigo: "FGA0073", creditos: 4, natureza: "OPTATORIA", prerequisitos: ["MAT0031", "FGA0071"] },
-        { id: "FGA0085", nome: "Matemática Discreta 1", codigo: "FGA0085", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: [] },
+        { id: "FGA0085", nome: "Matemática Discreta 1", codigo: "FGA0085", creditos: 4, natureza: "OPTATORIA", prerequisitos: [] },
         { id: "FGA0133", nome: "Engenharia Econômica", codigo: "FGA0133", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: [] },
         { id: "FGA0158", nome: "Orientação a Objetos", codigo: "FGA0158", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: ["CIC0004"] },
         { id: "FGA0160", nome: "Métodos Numéricos para Engenharia", codigo: "FGA0160", creditos: 4, natureza: "OBRIGATORIO", prerequisitos: ["MAT0026"] },

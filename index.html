@@ -59,6 +59,13 @@
                 <h2 class="logo"><a href="#">Fluxograma Eng. de Software</a></h2>
                 
                 <div id="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-label">Progresso do curso</span>
+                        <span id="progress-percent"></span>
+                    </div>
+                    <div id="progress-bar" title="Progresso do curso">
+                        <div id="progress-bar-fill"></div>
+                    </div>
                     <span id="total-progress"></span>
                     <span id="completed-progress"></span>
                     <span id="remaining-progress"></span>
@@ -110,6 +117,43 @@
         <div class="fluxograma-container">
         </div>
     </main>
+
+    <!-- Modal de Adicionar Matéria -->
+    <div id="add-materia-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 id="add-materia-title">Adicionar Matéria</h3>
+            <form id="add-materia-form" class="form-materia">
+                <label>Nome
+                    <input type="text" id="nova-nome" required maxlength="80" placeholder="Ex.: Aprendizado de Máquina">
+                </label>
+                <label>Código <span class="form-hint">(opcional)</span>
+                    <input type="text" id="nova-codigo" maxlength="12" placeholder="Ex.: FGA0083">
+                </label>
+                <div class="form-linha">
+                    <label>Semestre
+                        <select id="nova-semestre"></select>
+                    </label>
+                    <label>Créditos
+                        <input type="number" id="nova-creditos" min="1" max="30" value="4" required>
+                    </label>
+                </div>
+                <label>Natureza
+                    <select id="nova-natureza">
+                        <option value="OPTATIVA">Optativa</option>
+                        <option value="OPTATORIA">Optativa Obrigatória</option>
+                        <option value="OBRIGATORIO">Obrigatória</option>
+                    </select>
+                </label>
+                <label>Pré-requisitos <span class="form-hint">(códigos separados por vírgula, opcional)</span>
+                    <input type="text" id="nova-prereqs" placeholder="Ex.: CIC0004, MAT0025">
+                </label>
+                <div class="form-acoes">
+                    <button type="button" id="cancel-add-materia" class="btn-secundario">Cancelar</button>
+                    <button type="submit" id="add-materia-submit" class="btn-primario">Adicionar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Modal de Erro -->
     <div id="error-modal" class="modal-overlay" style="display: none;">

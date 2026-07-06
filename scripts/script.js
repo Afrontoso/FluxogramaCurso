@@ -42,9 +42,133 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalProgressSpan = document.getElementById('total-progress');
     const completedProgressSpan = document.getElementById('completed-progress');
     const remainingProgressSpan = document.getElementById('remaining-progress');
+    const progressBarFill = document.getElementById('progress-bar-fill');
+    const progressPercentSpan = document.getElementById('progress-percent');
 
     closeModalBtn.addEventListener('click', () => {
         errorModal.style.display = 'none';
+    });
+
+    // --- MODAL DE ADICIONAR / EDITAR MATÉRIA ---
+    const addMateriaModal = document.getElementById('add-materia-modal');
+    const addMateriaForm = document.getElementById('add-materia-form');
+    const addMateriaTitle = document.getElementById('add-materia-title');
+    const addMateriaSubmit = document.getElementById('add-materia-submit');
+    const cancelAddMateriaBtn = document.getElementById('cancel-add-materia');
+    const novaNome = document.getElementById('nova-nome');
+    const novaCodigo = document.getElementById('nova-codigo');
+    const novaSemestre = document.getElementById('nova-semestre');
+    const novaCreditos = document.getElementById('nova-creditos');
+    const novaNatureza = document.getElementById('nova-natureza');
+    const novaPrereqs = document.getElementById('nova-prereqs');
+    let editandoId = null;      // id da matéria sendo editada (null = adicionando)
+    let semestreOrigem = null;  // semestre atual da matéria em edição
+
+    // Preenche o seletor de semestres a partir da grade.
+    Object.keys(dadosFluxograma).forEach(sem => {
+        const opt = document.createElement('option');
+        opt.value = sem;
+        opt.textContent = `${sem}° Semestre`;
+        novaSemestre.appendChild(opt);
+    });
+
+    function abrirAddMateria(semestre) {
+        editandoId = null;
+        semestreOrigem = null;
+        addMateriaForm.reset();
+        addMateriaTitle.textContent = 'Adicionar Matéria';
+        addMateriaSubmit.textContent = 'Adicionar';
+        novaSemestre.value = semestre;
+        novaCreditos.value = 4;
+        addMateriaModal.style.display = 'flex';
+        novaNome.focus();
+    }
+
+    function abrirEditarMateria(materia, semestre) {
+        editandoId = materia.id;
+        semestreOrigem = semestre;
+        addMateriaTitle.textContent = 'Editar Matéria';
+        addMateriaSubmit.textContent = 'Salvar';
+        novaNome.value = materia.nome;
+        novaCodigo.value = materia.codigo === 'OPTATIVA' ? '' : materia.codigo;
+        novaSemestre.value = semestre;
+        novaCreditos.value = materia.creditos;
+        novaNatureza.value = materia.natureza;
+        novaPrereqs.value = (materia.prerequisitos || []).join(', ');
+        addMateriaModal.style.display = 'flex';
+        novaNome.focus();
+    }
+
+    function fecharAddMateria() {
+        addMateriaModal.style.display = 'none';
+        editandoId = null;
+        semestreOrigem = null;
+    }
+
+    async function excluirMateria(id, semestre) {
+        const lista = userCustomSubjects[semestre] || [];
+        const materia = lista.find(m => m.id === id);
+        if (!materia) return;
+        if (!confirm(`Excluir a matéria "${materia.nome}"?`)) return;
+
+        userCustomSubjects[semestre] = lista.filter(m => m.id !== id);
+        if (userCustomSubjects[semestre].length === 0) delete userCustomSubjects[semestre];
+
+        const estavaConcluida = userCompletedSubjects.includes(id);
+        if (estavaConcluida) userCompletedSubjects = userCompletedSubjects.filter(x => x !== id);
+
+        const userDocRef = fb.doc(fb.db, "users", currentUser.uid);
+        const updates = { customSubjects: userCustomSubjects };
+        if (estavaConcluida) updates.completed = fb.arrayRemove(id);
+        await fb.updateDoc(userDocRef, updates);
+
+        gerarFluxograma(userCompletedSubjects, userCustomSubjects);
+    }
+
+    cancelAddMateriaBtn.addEventListener('click', fecharAddMateria);
+    addMateriaModal.addEventListener('click', (e) => {
+        if (e.target === addMateriaModal) fecharAddMateria();
+    });
+
+    addMateriaForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!currentUser) return;
+
+        const nome = novaNome.value.trim();
+        const creditos = parseInt(novaCreditos.value, 10);
+        const semestreDestino = novaSemestre.value;
+        if (!nome || isNaN(creditos) || creditos <= 0 || !semestreDestino) return;
+
+        const dados = {
+            nome,
+            codigo: novaCodigo.value.trim().toUpperCase() || 'OPTATIVA',
+            creditos,
+            natureza: novaNatureza.value,
+            prerequisitos: novaPrereqs.value
+                .split(',')
+                .map(s => s.trim().toUpperCase())
+                .filter(Boolean)
+        };
+
+        if (editandoId) {
+            // Remove da posição antiga e reinsere (pode ter mudado de semestre).
+            const origem = userCustomSubjects[semestreOrigem] || [];
+            const existente = origem.find(m => m.id === editandoId);
+            userCustomSubjects[semestreOrigem] = origem.filter(m => m.id !== editandoId);
+            if (userCustomSubjects[semestreOrigem].length === 0) delete userCustomSubjects[semestreOrigem];
+
+            if (!userCustomSubjects[semestreDestino]) userCustomSubjects[semestreDestino] = [];
+            userCustomSubjects[semestreDestino].push({ ...existente, ...dados, id: editandoId });
+        } else {
+            if (!userCustomSubjects[semestreDestino]) userCustomSubjects[semestreDestino] = [];
+            userCustomSubjects[semestreDestino].push({ id: `custom-${Date.now()}`, ...dados });
+        }
+
+        const userDocRef = fb.doc(fb.db, "users", currentUser.uid);
+        await fb.updateDoc(userDocRef, { customSubjects: userCustomSubjects });
+
+        fecharAddMateria();
+        gerarFluxograma(userCompletedSubjects, userCustomSubjects);
     });
 
     loginBtn.addEventListener('click', async () => {
@@ -114,36 +238,49 @@ document.addEventListener('DOMContentLoaded', () => {
             totalProgressSpan.innerHTML = "";
             completedProgressSpan.innerHTML = "";
             remainingProgressSpan.innerHTML = "";
+            progressPercentSpan.textContent = "";
+            progressBarFill.style.width = "0";
             return;
         }
 
         const HOURS_PER_CREDIT = 15;
-        let totalCredits = 0;
-        let completedCredits = 0;
+        // Metas fixas do currículo (em horas). Ajuste aqui se o currículo mudar.
+        const META_OBRIGATORIA_H = 2580; // Obrigatórias + Optativas Obrigatórias
+        const META_OPTATIVA_H = 900;     // Optativas
+        const META_TOTAL_H = META_OBRIGATORIA_H + META_OPTATIVA_H;
 
-        // Calcula o total de créditos
-        for (const semestre in allSubjectsData) {
-            allSubjectsData[semestre].forEach(materia => {
-                totalCredits += materia.creditos;
-            });
-        }
+        // Soma as horas concluídas por bucket.
+        // Optativa Obrigatória (OPTATORIA) conta junto das optativas.
+        let horasObrigatoriaConcluidas = 0;
+        let horasOptativaConcluidas = 0;
 
-        // Calcula os créditos concluídos
         userCompletedSubjects.forEach(subjectId => {
             for (const semestre in allSubjectsData) {
                 const found = allSubjectsData[semestre].find(m => m.id === subjectId);
                 if (found) {
-                    completedCredits += found.creditos;
+                    const horas = found.creditos * HOURS_PER_CREDIT;
+                    if (found.natureza === 'OBRIGATORIO') {
+                        horasObrigatoriaConcluidas += horas;
+                    } else {
+                        horasOptativaConcluidas += horas;
+                    }
                     break;
                 }
             }
         });
 
-        const remainingCredits = totalCredits - completedCredits;
+        // Limita cada categoria à sua meta (horas excedentes não inflam o total).
+        const obrigConcluidas = Math.min(horasObrigatoriaConcluidas, META_OBRIGATORIA_H);
+        const optConcluidas = Math.min(horasOptativaConcluidas, META_OPTATIVA_H);
+        const totalConcluido = obrigConcluidas + optConcluidas;
+        const faltam = META_TOTAL_H - totalConcluido;
+        const percent = Math.round((totalConcluido / META_TOTAL_H) * 100);
 
-        totalProgressSpan.innerHTML = `Total: <strong>${totalCredits} CR</strong> (${totalCredits * HOURS_PER_CREDIT}h)`;
-        completedProgressSpan.innerHTML = `Concluído: <strong>${completedCredits} CR</strong> (${completedCredits * HOURS_PER_CREDIT}h)`;
-        remainingProgressSpan.innerHTML = `Pendente: <strong>${remainingCredits} CR</strong> (${remainingCredits * HOURS_PER_CREDIT}h)`;
+        totalProgressSpan.innerHTML = `Obrigatórias: <strong>${obrigConcluidas}h</strong> / ${META_OBRIGATORIA_H}h`;
+        completedProgressSpan.innerHTML = `Optativas: <strong>${optConcluidas}h</strong> / ${META_OPTATIVA_H}h`;
+        remainingProgressSpan.innerHTML = `Faltam: <strong>${faltam}h</strong>`;
+        progressPercentSpan.textContent = `${percent}%`;
+        progressBarFill.style.width = `${percent}%`;
     }
 
     // --- LÓGICA DO FLUXOGRAMA ---
@@ -153,6 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function gerarFluxograma(completed = [], custom = {}) {
+        removeActiveLines();
         container.innerHTML = '';
         allSubjectsData = JSON.parse(JSON.stringify(dadosFluxograma));
 
@@ -178,17 +316,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (materia.natureza === 'OBRIGATORIO') card.classList.add('obrigatoria');
                 if (materia.natureza === 'OPTATIVA') card.classList.add('custom');
                 if (materia.natureza === 'OPTATORIA') card.classList.add('optatoria');
-                if (completed.includes(materia.id)) card.classList.add('completed');
+
+                const isCompleted = completed.includes(materia.id);
+                // Bloqueada: usuário logado, não concluída e com algum pré-requisito pendente.
+                const prereqsConcluidos = (materia.prerequisitos || []).every(p => completed.includes(p));
+                const isLocked = currentUser && !isCompleted && !prereqsConcluidos;
+                // Card criado manualmente pelo usuário (permite editar/excluir).
+                const isCustom = typeof materia.id === 'string' && materia.id.startsWith('custom-');
+
+                if (isCompleted) card.classList.add('completed');
+                if (isLocked) card.classList.add('locked');
+                if (isCustom) card.classList.add('is-custom');
 
                 card.dataset.id = materia.id;
 
+                const controle = isLocked
+                    ? `<span class="materia-lock" title="Bloqueada — conclua os pré-requisitos"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 0 1 6 0v3H9zm3 5a1.5 1.5 0 0 1 .5 2.915V19a.5.5 0 0 1-1 0v-2.085A1.5 1.5 0 0 1 12 14z"></path></svg></span>`
+                    : `<input type="checkbox" class="materia-checkbox" ${isCompleted ? 'checked' : ''} data-materia-id="${materia.id}">`;
+
+                const acoes = isCustom
+                    ? `<div class="card-acoes">
+                            <button class="card-editar" title="Editar" data-id="${materia.id}" data-semestre="${semestre}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06zM17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83a.996.996 0 0 0 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"></path></svg></button>
+                            <button class="card-excluir" title="Excluir" data-id="${materia.id}" data-semestre="${semestre}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5-1-1h-5l-1 1H5v2h14V4h-3.5z"></path></svg></button>
+                        </div>`
+                    : '';
+
                 card.innerHTML = `
+                                ${acoes}
                                 <div class="materia-header">
                                     <span class="materia-codigo">${materia.codigo}</span>
                                     <span class="materia-creditos">${materia.creditos} CR</span>
                                 </div>
                                 <div class="materia-nome">${materia.nome}</div>
-                                <input type="checkbox" class="materia-checkbox" ${completed.includes(materia.id) ? 'checked' : ''} data-materia-id="${materia.id}">
+                                ${controle}
                             `;
 
                 card.addEventListener('click', (e) => {
@@ -215,50 +375,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (e.target.checked) {
                     await fb.updateDoc(userDocRef, { completed: fb.arrayUnion(materiaId) });
                     userCompletedSubjects.push(materiaId);
-                    document.querySelector(`[data-id="${materiaId}"]`).classList.add('completed');
                 } else {
                     await fb.updateDoc(userDocRef, { completed: fb.arrayRemove(materiaId) });
                     userCompletedSubjects = userCompletedSubjects.filter(id => id !== materiaId);
-                    document.querySelector(`[data-id="${materiaId}"]`).classList.remove('completed');
                 }
-                updateProgressPanel(); // Atualiza o painel após a mudança
+                // Re-renderiza para recalcular bloqueios (matérias liberadas/travadas)
+                gerarFluxograma(userCompletedSubjects, userCustomSubjects);
             });
         });
 
         document.querySelectorAll('.add-materia-btn').forEach(button => {
-            button.addEventListener('click', async (e) => {
+            button.addEventListener('click', (e) => {
                 if (!currentUser) return;
-                const semestre = e.currentTarget.dataset.semestre;
+                abrirAddMateria(e.currentTarget.dataset.semestre);
+            });
+        });
 
-                const nome = prompt("Nome da matéria:");
-                if (!nome) return;
+        document.querySelectorAll('.card-editar').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!currentUser) return;
+                const { id, semestre } = e.currentTarget.dataset;
+                const materia = (userCustomSubjects[semestre] || []).find(m => m.id === id);
+                if (materia) abrirEditarMateria(materia, semestre);
+            });
+        });
 
-                const creditos = parseInt(prompt("Número de créditos:"), 10);
-                if (isNaN(creditos) || creditos <= 0) {
-                    alert("Por favor, insira um número de créditos válido.");
-                    return;
-                }
-
-                const newMateria = {
-                    id: `custom-${Date.now()}`,
-                    nome,
-                    codigo: 'OPTATIVA',
-                    creditos,
-                    natureza: 'OPTATIVA',
-                    prerequisitos: []
-                };
-
-                if (!userCustomSubjects[semestre]) {
-                    userCustomSubjects[semestre] = [];
-                }
-                userCustomSubjects[semestre].push(newMateria);
-
-                const userDocRef = fb.doc(fb.db, "users", currentUser.uid);
-                await fb.updateDoc(userDocRef, {
-                    customSubjects: userCustomSubjects
-                });
-
-                gerarFluxograma(userCompletedSubjects, userCustomSubjects);
+        document.querySelectorAll('.card-excluir').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!currentUser) return;
+                const { id, semestre } = e.currentTarget.dataset;
+                excluirMateria(id, semestre);
             });
         });
     }
