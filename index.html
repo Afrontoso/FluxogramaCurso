@@ -57,7 +57,12 @@
         <div class="container">
             <nav class="navbar">
                 <h2 class="logo"><a href="#">Fluxograma Eng. de Software</a></h2>
-                
+
+                <div class="view-tabs" id="view-tabs">
+                    <button class="view-tab ativo" data-view="fluxograma">Fluxograma</button>
+                    <button class="view-tab" data-view="planejador">Planejador</button>
+                </div>
+
                 <div id="progress-section">
                     <div class="progress-header">
                         <span class="progress-label">Progresso do curso</span>
@@ -114,7 +119,22 @@
     </header>
 
     <main>
-        <div class="fluxograma-container">
+        <div id="view-fluxograma" class="view">
+            <div class="fluxograma-container">
+            </div>
+        </div>
+
+        <div id="view-planejador" class="view" style="display: none;">
+            <div class="container">
+                <div class="planejador-topo">
+                    <div>
+                        <h2 class="planejador-titulo">Planejador de Semestres</h2>
+                        <p class="planejador-dica">Monte seus próximos semestres com as matérias que faltam, definindo os dias e horários.</p>
+                    </div>
+                    <button id="novo-plano-btn" class="btn-primario">+ Novo semestre</button>
+                </div>
+                <div id="planos-lista"></div>
+            </div>
         </div>
     </main>
 
@@ -150,6 +170,46 @@
                 <div class="form-acoes">
                     <button type="button" id="cancel-add-materia" class="btn-secundario">Cancelar</button>
                     <button type="submit" id="add-materia-submit" class="btn-primario">Adicionar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Novo Semestre -->
+    <div id="plano-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Novo Semestre</h3>
+            <form id="plano-form" class="form-materia">
+                <div class="form-linha">
+                    <label>Ano
+                        <input type="number" id="plano-ano" min="2020" max="2100" required>
+                    </label>
+                    <label>Período
+                        <select id="plano-periodo">
+                            <option value="1">1º semestre</option>
+                            <option value="2">2º semestre</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-acoes">
+                    <button type="button" id="cancel-plano" class="btn-secundario">Cancelar</button>
+                    <button type="submit" class="btn-primario">Criar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Adicionar Matéria ao Semestre -->
+    <div id="add-plano-materia-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Adicionar matéria ao semestre</h3>
+            <form id="add-plano-materia-form" class="form-materia">
+                <label>Matéria <span class="form-hint">(pendentes)</span>
+                    <select id="plano-materia-select"></select>
+                </label>
+                <div class="form-acoes">
+                    <button type="button" id="cancel-plano-materia" class="btn-secundario">Cancelar</button>
+                    <button type="submit" class="btn-primario">Adicionar</button>
                 </div>
             </form>
         </div>

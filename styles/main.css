@@ -740,6 +740,359 @@ body.logged-out #progress-section {
 }
 
 /* ==========================================================================
+   ABAS DE VISÃO (Fluxograma / Planejador)
+   ========================================================================== */
+.view-tabs {
+    display: flex;
+    gap: 0.3rem;
+    background-color: var(--cor-fundo-coluna);
+    padding: 0.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--cor-borda-sutil);
+}
+
+.view-tab {
+    padding: 0.4rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--cor-texto-secundario);
+    font-family: inherit;
+    font-size: 0.9em;
+    font-weight: 500;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.view-tab:hover {
+    color: var(--cor-texto-principal);
+}
+
+.view-tab.ativo {
+    background-color: var(--cor-primaria);
+    color: #fff;
+}
+
+/* Planejador exige login; oculta a aba quando deslogado */
+body.logged-out .view-tabs {
+    display: none;
+}
+
+/* A legenda é específica do fluxograma */
+body.modo-planejador #legenda {
+    display: none;
+}
+
+/* ==========================================================================
+   PLANEJADOR DE SEMESTRES
+   ========================================================================== */
+.planejador-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.planejador-titulo {
+    color: var(--cor-primaria);
+    font-size: 1.4em;
+}
+
+.planejador-dica {
+    color: var(--cor-texto-secundario);
+    font-size: 0.9em;
+    max-width: 60ch;
+}
+
+#planos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.planejador-vazio {
+    color: var(--cor-texto-secundario);
+    text-align: center;
+    padding: 3rem 1rem;
+    border: 2px dashed var(--cor-borda);
+    border-radius: 12px;
+}
+
+.plano-card {
+    background-color: var(--cor-fundo-coluna);
+    border: 1px solid var(--cor-borda-sutil);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.plano-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.plano-cabecalho h3 {
+    color: var(--cor-texto-principal);
+    font-size: 1.15em;
+}
+
+.plano-meta {
+    font-size: 0.85em;
+    color: var(--cor-texto-secundario);
+    margin-left: 0.6rem;
+    font-weight: 400;
+}
+
+.plano-acoes {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.plano-del {
+    background: transparent;
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto-secundario);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.plano-del:hover {
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+/* --- Grade semanal --- */
+.grade-wrapper {
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+}
+
+.grade {
+    display: grid;
+    grid-template-columns: 54px repeat(6, minmax(64px, 1fr));
+    grid-template-rows: 24px repeat(7, 48px);
+    min-width: 540px;
+    background-color: var(--cor-fundo-card);
+    border-radius: 8px;
+    border: 1px solid var(--cor-borda-sutil);
+    padding: 4px;
+}
+
+.grade-dia {
+    grid-row: 1;
+    text-align: center;
+    font-size: 0.75em;
+    font-weight: 700;
+    color: var(--cor-texto-secundario);
+    padding-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.grade-hora {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    font-size: 0.7em;
+    line-height: 1.15;
+    color: var(--cor-texto-secundario);
+    padding-right: 6px;
+}
+
+.grade-hora small {
+    opacity: 0.6;
+    font-size: 0.88em;
+}
+
+.grade-linha {
+    border-top: 1px solid var(--cor-borda-sutil);
+}
+
+.grade-aula {
+    z-index: 1;
+    margin: 2px;
+    border-radius: 5px;
+    padding: 2px 4px;
+    font-size: 0.72em;
+    line-height: 1.15;
+    color: #fff;
+    overflow: hidden;
+    cursor: default;
+    box-shadow: 0 1px 3px var(--cor-sombra);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.grade-aula .aula-cod {
+    font-weight: 700;
+}
+
+.grade-aula.conflito {
+    outline: 2px solid #e74c3c;
+    outline-offset: -2px;
+}
+
+.grade-conflito-aviso {
+    color: #e74c3c;
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* --- Lista de matérias do plano --- */
+.plano-materias {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.plano-materia {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    background-color: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda-sutil);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+}
+
+.plano-materia-cor {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.plano-materia-nome {
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-right: auto;
+}
+
+.plano-materia-nome small {
+    color: var(--cor-texto-secundario);
+    font-weight: 400;
+}
+
+.plano-materia-del {
+    background: transparent;
+    border: none;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    font-size: 1.1em;
+    line-height: 1;
+    padding: 0 0.2rem;
+    transition: color 0.2s ease;
+}
+
+.plano-materia-del:hover {
+    color: #e74c3c;
+}
+
+.aula-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    width: 100%;
+}
+
+.aula-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: var(--cor-fundo-coluna);
+    border: 1px solid var(--cor-borda);
+    border-radius: 20px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.78em;
+    color: var(--cor-texto-principal);
+}
+
+.aula-chip button {
+    background: none;
+    border: none;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    font-size: 1em;
+    line-height: 1;
+    padding: 0;
+}
+
+.aula-chip button:hover {
+    color: #e74c3c;
+}
+
+.aula-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    width: 100%;
+}
+
+.aula-form select {
+    font-family: inherit;
+    font-size: 0.8em;
+    padding: 0.3rem 0.4rem;
+    border-radius: 6px;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-fundo-coluna);
+    color: var(--cor-texto-principal);
+}
+
+.aula-form button {
+    background-color: var(--cor-primaria);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    font-size: 1.1em;
+    line-height: 1;
+}
+
+.aula-form button:hover {
+    background-color: var(--cor-primaria-hover);
+}
+
+.plano-add-materia {
+    margin-top: 1rem;
+    background: transparent;
+    border: 1px dashed var(--cor-borda);
+    color: var(--cor-texto-secundario);
+    border-radius: 8px;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-family: inherit;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.plano-add-materia:hover {
+    color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+/* ==========================================================================
    RESPONSIVIDADE
    ========================================================================== */
 @media (max-width: 1024px) {
