@@ -14,6 +14,15 @@
     <!-- BIBLIOTECA PARA DESENHAR AS LINHAS (Carregada no head) -->
     <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
 
+    <!-- Aplica o tema salvo o quanto antes para evitar "flash" ao carregar -->
+    <script>
+        (function () {
+            var salvo = localStorage.getItem('tema');
+            var tema = salvo || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            document.documentElement.setAttribute('data-theme', tema);
+        })();
+    </script>
+
     <link rel="stylesheet" href="styles/main.css">
     <title>Fluxograma de Engenharia de Software</title>
 
@@ -62,15 +71,36 @@
                         <button id="logout-btn">Sair</button>
                     </div>
                     <button id="login-btn">Login com Google</button>
+
+                    <button id="theme-toggle" aria-label="Alternar tema" title="Alternar tema claro/escuro">
+                        <!-- Sol: visível no tema escuro (clique para ir ao claro) -->
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zM3 11h2a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2zm16 0h2a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2zM5.64 4.22l1.42 1.42a1 1 0 0 1-1.42 1.42L4.22 5.64a1 1 0 0 1 1.42-1.42zm11.3 11.3l1.42 1.42a1 1 0 0 1-1.42 1.42l-1.42-1.42a1 1 0 0 1 1.42-1.42zM18.36 4.22a1 1 0 0 1 1.42 1.42l-1.42 1.42a1 1 0 0 1-1.42-1.42l1.42-1.42zM7.06 15.52a1 1 0 0 1 1.42 1.42l-1.42 1.42a1 1 0 0 1-1.42-1.42l1.42-1.42z"></path>
+                        </svg>
+                        <!-- Lua: visível no tema claro (clique para ir ao escuro) -->
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.45-9.45 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05a1 1 0 0 0-.36-1.05z"></path>
+                        </svg>
+                    </button>
                 </div>
 
                 <div id="legenda">
-                    <h3>Legenda</h3>
-                    <ul>
-                        <li><span class="cor-prerequisito"></span> Pré-requisito</li>
-                        <li><span class="cor-selecionada"></span> Selecionada</li>
-                        <li><span class="cor-liberada"></span> Liberada</li>
-                    </ul>
+                    <div class="legenda-grupo">
+                        <h4>Natureza</h4>
+                        <ul>
+                            <li><span class="cor-obrigatoria"></span> Obrigatória</li>
+                            <li><span class="cor-optativa"></span> Optativa</li>
+                            <li><span class="cor-optatoria"></span> Optativa Obrigatória</li>
+                        </ul>
+                    </div>
+                    <div class="legenda-grupo">
+                        <h4>Seleção</h4>
+                        <ul>
+                            <li><span class="cor-selecionada"></span> Selecionada</li>
+                            <li><span class="cor-prerequisito"></span> Pré-requisito</li>
+                            <li><span class="cor-liberada"></span> Liberada</li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
         </div>

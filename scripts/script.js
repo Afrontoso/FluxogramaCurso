@@ -9,6 +9,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let userCustomSubjects = {};
     let allSubjectsData = {}; // Variável para manter os dados combinados
 
+    // --- LÓGICA DO TEMA (CLARO / ESCURO) ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    function aplicarTema(tema) {
+        document.documentElement.setAttribute('data-theme', tema);
+        localStorage.setItem('tema', tema);
+        repositionActiveLines();
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        const temaAtual = document.documentElement.getAttribute('data-theme');
+        aplicarTema(temaAtual === 'light' ? 'dark' : 'light');
+    });
+
+    // Lê o valor computado de uma variável CSS (para as cores das linhas).
+    function corDaVar(nome) {
+        return getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+    }
+
     // --- LÓGICA DE AUTENTICAÇÃO E MODAL ---
     const loginBtn = document.getElementById('login-btn');
     const logoutBtn = document.getElementById('logout-btn');
@@ -158,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = 'materia-card';
                 if (materia.natureza === 'OBRIGATORIO') card.classList.add('obrigatoria');
                 if (materia.natureza === 'OPTATIVA') card.classList.add('custom');
+                if (materia.natureza === 'OPTATORIA') card.classList.add('optatoria');
                 if (completed.includes(materia.id)) card.classList.add('completed');
 
                 card.dataset.id = materia.id;
@@ -201,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     userCompletedSubjects = userCompletedSubjects.filter(id => id !== materiaId);
                     document.querySelector(`[data-id="${materiaId}"]`).classList.remove('completed');
                 }
-                console.log(subjectId, userCompletedSubjects)
                 updateProgressPanel(); // Atualiza o painel após a mudança
             });
         });
@@ -274,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const prereqCard = document.querySelector(`[data-id="${prereqId}"]`);
             if (prereqCard) {
                 prereqCard.classList.add('highlight-prerequisite');
-                const line = new LeaderLine(prereqCard, cardSelecionado, { color: 'var(--cor-prerequisito)', size: 3, path: 'fluid', dash: { animation: true } });
+                const line = new LeaderLine(prereqCard, cardSelecionado, { color: corDaVar('--cor-prerequisito'), size: 3, path: 'fluid', dash: { animation: true } });
                 activeLines.push(line);
             }
         });
@@ -285,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const materiaLiberadaCard = document.querySelector(`[data-id="${materia.id}"]`);
                     if (materiaLiberadaCard) {
                         materiaLiberadaCard.classList.add('highlight-unlocks');
-                        const line = new LeaderLine(cardSelecionado, materiaLiberadaCard, { color: 'var(--cor-liberada)', size: 3, path: 'fluid' });
+                        const line = new LeaderLine(cardSelecionado, materiaLiberadaCard, { color: corDaVar('--cor-liberada'), size: 3, path: 'fluid' });
                         activeLines.push(line);
                     }
                 }

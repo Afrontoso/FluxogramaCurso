@@ -1,19 +1,60 @@
+/* ==========================================================================
+   VARIÁVEIS DE TEMA
+   ========================================================================== */
+
+/* Tema escuro (padrão) */
 :root {
     --cor-fundo: #121212;
     --cor-fundo-card: #2a2a2a;
     --cor-fundo-coluna: #1c1c1c;
+    --cor-navbar: #1a1a1a;
     --cor-texto-principal: #e0e0e0;
-    --cor-texto-secundario: #aaa;
+    --cor-texto-secundario: #9aa0a6;
     --cor-primaria: #00aaff;
+    --cor-primaria-hover: #33bbff;
     --cor-optativa: #9b59b6;
-    --cor-borda: #444;
+    --cor-optatoria: #e67e22;
+    --cor-borda: #3a3a3a;
+    --cor-borda-sutil: #262626;
 
     --cor-selecionada: #00aaff;
     --cor-prerequisito: #ffc107;
     --cor-liberada: #28a745;
-    --cor-texto-destaque: #000;
+
+    --cor-sombra: rgba(0, 0, 0, 0.45);
+    --cor-overlay: rgba(0, 0, 0, 0.7);
+    --cor-scroll: #3a3a3a;
+    --cor-scroll-hover: #505050;
 }
 
+/* Tema claro */
+html[data-theme="light"] {
+    --cor-fundo: #f0f2f5;
+    --cor-fundo-card: #ffffff;
+    --cor-fundo-coluna: #e7ebf0;
+    --cor-navbar: #ffffff;
+    --cor-texto-principal: #1c1e21;
+    --cor-texto-secundario: #606770;
+    --cor-primaria: #0077cc;
+    --cor-primaria-hover: #005fa3;
+    --cor-optativa: #8e44ad;
+    --cor-optatoria: #d35400;
+    --cor-borda: #d0d7de;
+    --cor-borda-sutil: #dfe3e8;
+
+    --cor-selecionada: #0077cc;
+    --cor-prerequisito: #e6a700;
+    --cor-liberada: #1e9e46;
+
+    --cor-sombra: rgba(30, 40, 60, 0.12);
+    --cor-overlay: rgba(30, 40, 60, 0.55);
+    --cor-scroll: #c3cad3;
+    --cor-scroll-hover: #a8b1bd;
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -25,6 +66,7 @@ body {
     color: var(--cor-texto-principal);
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -32,14 +74,42 @@ body {
     margin: 0 auto;
 }
 
-/* --- HEADER --- */
+/* Scrollbar customizada */
+.fluxograma-container::-webkit-scrollbar {
+    height: 10px;
+}
+
+.fluxograma-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fluxograma-container::-webkit-scrollbar-thumb {
+    background: var(--cor-scroll);
+    border-radius: 10px;
+}
+
+.fluxograma-container::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-scroll-hover);
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--cor-navbar);
+    border-bottom: 1px solid var(--cor-borda-sutil);
+    box-shadow: 0 2px 12px var(--cor-sombra);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
 .navbar {
-    background-color: #1f1f1f;
-    padding: 1rem;
+    padding: 0.9rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #333;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -47,50 +117,60 @@ body {
 .navbar .logo a {
     color: var(--cor-primaria);
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-weight: 700;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
 }
 
-.nav-links a {
-    color: var(--cor-texto-secundario);
-    text-decoration: none;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 2px solid var(--cor-texto-secundario);
+/* --- Legenda --- */
+#legenda {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1em;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
-.nav-links a:hover {
-    color: var(--cor-fundo);
-    background-color: var(--cor-primaria);
-    border-color: var(--cor-primaria);
+.legenda-grupo h4 {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 0.3rem;
+    font-weight: 700;
 }
 
 #legenda ul {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.9rem;
 }
 
 #legenda li {
-    margin-left: 1rem;
     display: flex;
     align-items: center;
-    font-size: 0.9em;
+    font-size: 0.82em;
+    color: var(--cor-texto-secundario);
 }
 
 #legenda span {
     display: inline-block;
-    width: 15px;
-    height: 15px;
-    border-radius: 3px;
-    margin-right: 5px;
-    border: 1px solid #555;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    margin-right: 6px;
+}
+
+.cor-obrigatoria {
+    background-color: var(--cor-primaria);
+}
+
+.cor-optativa {
+    background-color: var(--cor-optativa);
+}
+
+.cor-optatoria {
+    background-color: var(--cor-optatoria);
 }
 
 .cor-prerequisito {
@@ -105,23 +185,25 @@ body {
     background-color: var(--cor-liberada);
 }
 
-/* --- AUTH & PROGRESS SECTION --- */
+/* ==========================================================================
+   AUTH, PROGRESSO E TEMA
+   ========================================================================== */
 .auth-section {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 #progress-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.2rem;
+    gap: 0.15rem;
     font-size: 0.8em;
     color: var(--cor-texto-secundario);
-    padding: 0.5rem;
-    border-left: 2px solid var(--cor-borda);
-    margin-left: 1rem;
+    padding: 0.35rem 0.9rem;
+    border-left: 3px solid var(--cor-borda);
+    margin-left: 0.5rem;
 }
 
 #progress-section span strong {
@@ -141,25 +223,97 @@ body {
     background-color: var(--cor-primaria);
     color: #fff;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: 500;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#login-btn:hover,
+#logout-btn:hover {
+    background-color: var(--cor-primaria-hover);
+}
+
+#login-btn:active,
+#logout-btn:active {
+    transform: scale(0.97);
+}
+
+#logout-btn {
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    border: 1px solid var(--cor-borda);
+}
+
+#logout-btn:hover {
+    background-color: transparent;
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-texto-secundario);
 }
 
 #user-info {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.7rem;
 }
 
 #user-info img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--cor-borda);
+}
+
+#user-name {
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+/* --- Botão de alternância de tema --- */
+#theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    border: 1px solid var(--cor-borda);
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
 }
 
-/* --- MAIN FLUXOGRAMA --- */
+#theme-toggle:hover {
+    color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    transform: rotate(15deg);
+}
+
+#theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* Alterna qual ícone aparece conforme o tema */
+#theme-toggle .icon-moon {
+    display: none;
+}
+
+html[data-theme="light"] #theme-toggle .icon-sun {
+    display: none;
+}
+
+html[data-theme="light"] #theme-toggle .icon-moon {
+    display: block;
+}
+
+/* ==========================================================================
+   FLUXOGRAMA
+   ========================================================================== */
 main {
     padding: 2rem 0;
 }
@@ -167,7 +321,7 @@ main {
 .fluxograma-container {
     position: relative;
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
     overflow-x: auto;
     padding: 1rem;
     min-height: 70vh;
@@ -175,27 +329,33 @@ main {
 
 .semestre-coluna {
     flex: 1;
-    min-width: 220px;
+    min-width: 230px;
     background-color: var(--cor-fundo-coluna);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 1rem;
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--cor-borda-sutil);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .semestre-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #333;
-    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--cor-borda-sutil);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.25rem;
 }
 
 .semestre-header h3 {
     color: var(--cor-primaria);
-    font-size: 1em;
+    font-size: 0.95em;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
 }
 
 .add-materia-btn {
+    display: flex;
+    align-items: center;
     background: none;
     border: none;
     cursor: pointer;
@@ -203,14 +363,15 @@ main {
 }
 
 .add-materia-btn svg {
-    width: 27px;
-    height: 27px;
+    width: 26px;
+    height: 26px;
     fill: var(--cor-texto-secundario);
-    transition: fill 0.3s ease;
+    transition: fill 0.2s ease, transform 0.2s ease;
 }
 
 .add-materia-btn:hover svg {
     fill: var(--cor-primaria);
+    transform: scale(1.1);
 }
 
 /* Esconde controles quando o usuário está deslogado */
@@ -220,119 +381,136 @@ body.logged-out #progress-section {
     display: none;
 }
 
+/* --- Cards --- */
 .materia-card {
     position: relative;
     background-color: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda-sutil);
     border-left: 5px solid var(--cor-borda);
-    border-radius: 6px;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
+    border-radius: 8px;
+    padding: 0.8rem 0.9rem;
+    margin-bottom: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px var(--cor-sombra);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+        background-color 0.3s ease, opacity 0.2s ease;
 }
 
-.materia-card.completed {
-    opacity: 0.6;
-}
-
-.materia-card.completed .materia-nome {
-    text-decoration: line-through;
-}
-
-.materia-card.custom {
-    border-left-color: var(--cor-optativa);
-}
-
-.materia-checkbox {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+.materia-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--cor-primaria);
+    box-shadow: 0 8px 20px var(--cor-sombra);
 }
 
 .materia-card.obrigatoria {
     border-left-color: var(--cor-primaria);
 }
 
-.materia-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--cor-primaria);
+.materia-card.custom {
+    border-left-color: var(--cor-optativa);
+}
+
+.materia-card.optatoria {
+    border-left-color: var(--cor-optatoria);
+}
+
+.materia-card.completed {
+    opacity: 0.55;
+}
+
+.materia-card.completed .materia-nome {
+    text-decoration: line-through;
+}
+
+.materia-checkbox {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--cor-liberada);
 }
 
 .materia-header {
     display: flex;
     justify-content: space-between;
-    font-size: 0.75em;
+    font-size: 0.72em;
     color: var(--cor-texto-secundario);
-    margin-bottom: 0.5rem;
-    transition: color 0.3s ease;
+    margin-bottom: 0.4rem;
+    transition: color 0.2s ease;
 }
 
 .materia-nome {
     font-weight: 500;
     font-size: 0.9em;
     color: var(--cor-texto-principal);
+    padding-right: 1.2rem;
+    transition: color 0.2s ease;
 }
 
-/* --- Estilos para Interatividade --- */
+/* ==========================================================================
+   INTERATIVIDADE / DESTAQUES
+   ========================================================================== */
 .materia-card.highlight-selected,
 .materia-card.highlight-prerequisite,
 .materia-card.highlight-unlocks {
-    color: var(--cor-texto-destaque);
-}
-
-.materia-card.highlight-selected .materia-header,
-.materia-card.highlight-prerequisite .materia-header,
-.materia-card.highlight-unlocks .materia-header {
-    color: var(--cor-texto-destaque);
-}
-
-.materia-card.highlight-selected .materia-nome,
-.materia-card.highlight-prerequisite .materia-nome,
-.materia-card.highlight-unlocks .materia-nome {
-    color: var(--cor-texto-destaque);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 6px 18px var(--cor-sombra);
+    transform: translateY(-2px);
 }
 
 .materia-card.highlight-selected {
     background-color: var(--cor-selecionada);
-    border-color: #fff;
 }
 
 .materia-card.highlight-prerequisite {
     background-color: var(--cor-prerequisito);
-    border-color: #fff;
 }
 
 .materia-card.highlight-unlocks {
     background-color: var(--cor-liberada);
-    border-color: #fff;
 }
 
-/* --- MODAL STYLES --- */
+/* Selecionada e liberada: texto branco. Pré-requisito (amarelo): texto escuro. */
+.materia-card.highlight-selected .materia-nome,
+.materia-card.highlight-selected .materia-header,
+.materia-card.highlight-unlocks .materia-nome,
+.materia-card.highlight-unlocks .materia-header {
+    color: #ffffff;
+}
+
+.materia-card.highlight-prerequisite .materia-nome,
+.materia-card.highlight-prerequisite .materia-header {
+    color: #1a1a1a;
+}
+
+/* ==========================================================================
+   MODAL
+   ========================================================================== */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--cor-overlay);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    backdrop-filter: blur(2px);
 }
 
 .modal-content {
     background-color: var(--cor-fundo-card);
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 12px;
     text-align: center;
     max-width: 500px;
     color: var(--cor-texto-principal);
     border: 1px solid var(--cor-primaria);
+    box-shadow: 0 12px 40px var(--cor-sombra);
 }
 
 .modal-content h3 {
@@ -349,13 +527,25 @@ body.logged-out #progress-section {
     background-color: var(--cor-primaria);
     color: #fff;
     border: none;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
+    padding: 0.55rem 1.5rem;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
 }
 
-/* --- MEDIA QUERIES --- */
+#close-modal-btn:hover {
+    background-color: var(--cor-primaria-hover);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
 @media (max-width: 1024px) {
+    header {
+        position: static;
+    }
+
     .navbar {
         flex-direction: column;
         align-items: center;
